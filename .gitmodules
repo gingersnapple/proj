@@ -1,0 +1,3 @@
+[submodule "hyperiax_old"]
+	path = hyperiax_old
+	url = git@github.com:stefansommer/hyperiax_old.git

@@ -1,0 +1,145 @@
+\documentclass[12pt]{article}
+
+\usepackage[style=authoryear]{biblatex}
+\addbibresource{refs.bib}
+%\bibliography{refs}
+%\usepackage[toc,page]{appendix}
+
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{hyperref}
+%\usepackage{lmodern}
+
+\usepackage{amsmath,amsfonts,amssymb} % Math packages
+\usepackage{amsthm}   % Theorems
+\usepackage{array}    % Better tables
+\usepackage{commath}  % derivatives and partials
+\usepackage{enumitem} % List manipulation
+\usepackage{float}    % Better positioning [H]
+\usepackage{framed}   % Framed boxes
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{graphicx} % Include images
+\usepackage{multirow} % multicolumn tables
+%\usepackage{pgfplots} % Create plots in latex
+\usepackage{siunitx}  % SI unit system
+\renewcommand{\arraystretch}{1.6}
+%
+%\pgfplotsset{compat=1.18}
+%
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+
+\newenvironment{define}[1]
+	{\begin{framed}\begin{definition}{#1\\\\[1ex]}}
+	{\end{definition}\end{framed}}
+
+
+\geometry{
+        paper=a4paper, % Paper size, change to letterpaper for US letter size
+        top=2.5cm, % top margin
+        bottom=2.5cm, % Bottom margin
+        left=2.5cm, % left margin
+        right=2.5cm, % Right margin
+        headheight=14pt, % Header height
+        footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+        headsep=1.2cm, % Space from the top margin to the baseline of the header
+}
+
+\let\tss\textsuperscript % superscript macro
+\let\oldtextbf\textbf
+\renewcommand{\textbf}[1]{\oldtextbf{\boldmath #1}}
+
+\newcommand{\reaction}[1]{\begin{equation}\ce{#1}\end{equation}}
+
+
+% this change the content of the frontpage
+
+%\ptype{Bachelor's Thesis}
+\author{Luka Vest Büchmann}
+\title{Optimizing Phylogenetic PCA}
+%\subtitle{\textit{Subtitle TBD}}
+%\advisor{Advisor: {Stefan Sommer}}
+\date{\today}
+%\fpimage{picture.png} % Remove this command if no image is desiredi
+
+
+
+
+
+%\renewcommand{\contentsname}{Table of content}
+
+\begin{document}
+
+%\maketitle
+%\newpage
+
+\tableofcontents
+\newpage
+
+\section{Relevant Theory}
+
+
+\subsection{The Spectral Theorem}
+\begin{equation}
+	S = Q \Sigma Q^T
+	\label{eq:Spectral}
+\end{equation}
+
+\subsection{Singular Value Decomposition (SVD)}
+
+
+
+\begin{equation}
+	A = U \Sigma V^T
+	\label{eq:SVD}
+\end{equation}
+
+\subsection{Principle Component Analysis}
+
+From the previous section on SVD, we know that any matrix can be expressed as a product of an orthogonal, a diagonal, and another orthogonal matrix:
+$$
+A = U \Sigma V^T
+$$ 
+\textit{maybe explain how rest of sigmas/singvals are zero leading to only R pieces} \\
+\textit{also not entirely clear myself on why} $\sigma_1 \ge \sigma_2 \ge \ldots \ge \sigma_R$
+
+This can be further expressed as a sum of R rank-1 pieces, R being the original matrix A's rank.
+
+$$
+= \sigma_1 u_1 v_1^T + \ldots + \sigma_R u_R v_R^T
+$$ 
+
+
+These pieces are individually know as \textit{principal components}, and are, as the name suggests, key to PCA. 
+
+Picking any $k \le R$, $A_k$ is defined as the sum of the first \textit{k} principal components: 
+$$
+A_k = \sigma_1 u_1 v_1^T + \ldots + \sigma_k u_k v_k^T
+$$ 
+
+We claim that this matrix $A_k$ is the closest possible approximation of $A$ with rank \textit{k}.
+\ldots \textit{maybe explain norms and def. of ``approxomation'', add proofs for Eckart-Young}
+
+This claim is neatly defined in the \textit{Eckart-Young Theorem}: 
+\textit{italics?}
+\begin{equation}
+	\mathrm{rank}(B) = k \implies \|A - B\| \ge \|A - A_k\|
+	\label{eq:Eckart-Young}
+\end{equation}
+
+\subsection{Phylogenetic PCA}
+
+
+
+\cite{sommer}
+
+\section{Demonstrative Work}
+
+
+
+
+\printbibliography
+
+\end{document}
