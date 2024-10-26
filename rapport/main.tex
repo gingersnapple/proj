@@ -80,21 +80,177 @@
 
 \section{Relevant Theory}
 
+\subsection{Symmetric matrices}
+
+A symmetric matrix is one whose transpose is equal to itself
+\[ S = S^T \]
+
+Recall rules for matrix transpose:
+\begin{align*}
+	(A^T)^T = A \\
+	(AB)^T = B^T A^T 
+\end{align*}
+
+
+Using these rules, we can prove that the product of any matrix with its transpose is symmetric:
+\begin{align*}
+	(A A^T)^T = (A^T)^T A^T = A A^T \\
+	(A^T A)^T = A^T (A^T)^T = A^T A \\
+\end{align*}
+
+\subsection{Similar matrices}
+
+Matrices \textit{A} and \textit{B} are called ``similar'', if there exists an invertible matrix \textit{M}, s.t.
+
+$B = M^{-1} A M$. Similar matrices also share the same eigenvalues .
+
+% assuming A/B is invertible?
+If at least one of \textit{A} and \textit{B} are invertible, then \textit{AB} and \textit{BA} are similar.
+When the invertible (full-rank) matrix is not square, we can choose a proof that only uses the left or right inverse product as the case may be.
+\begin{align*}
+	B (A B) B^{-1} &= (B A) (B B^{-1}) = B A  \\
+	%A (B A) A^{-1} &= (A B) (A A^{-1}) = A B  
+	A^{-1} (A B) (A^{-1})^{-1} &= A^{-1} (A B) A = (A^{-1} A) (B A) = B A 
+\end{align*}
+The remaining two cases are identical to the above with \textit{A} and \textit{B} swapped.
+
+\subsection{Orthogonal matrices}
+This term is slightly confusingly used to describe matrices with ortho\textit{normal} columns. I will use the letter \textit{Q} to symbolize such orthogonal matrices.
+
+
+\subsection{Eigenvalues and Eigenvectors}
+
+Given any square matrix: $A_{n\times n}$,
+any vector $x_{n\times 1}$ , and any real number $\lambda \in \mathbb{R}$. \\
+When the following equation is true, \textit{x} is an eigenvector of \textit{A}, and $\lambda$ is its matching eigenvalue:
+\[A x = \lambda x\]
+
+% \textit{A} can have up to \textit{n} nonzero eigenvector -value pairs (a full set).
+
+Solving this expression leads to a system of equations with an infinite solution space.
+However, it is convenient to select \textit{normalized} eigenvectors:
+$$\forall x_i \left(\|x_i\|^2 = 1\right)$$
+
 
 \subsection{The Spectral Theorem}
+
+The \textit{Spectral Theorem} provides a useful decomposition for symmetric matrices:
+
 \begin{equation}
-	S = Q \Sigma Q^T
+	S = Q \Lambda Q^T
 	\label{eq:Spectral}
 \end{equation}
 
+$$S_{n\times n} = S^T$$
+
+\[
+\Lambda_{n\times n} =
+\left[ {\begin{array}{cccc}
+		\lambda_{1} & 0 & \cdots & 0       \\
+		0 & \lambda_{2} & \cdots & 0 \\
+		\vdots & \vdots   & \ddots & \vdots	\\
+		0 & 0 & \cdots  & \lambda_{n}\\
+\end{array} } \right]
+\]
+
+\textit{Q} consists of \textit{S}'s normalized eigenvectors:
+
+\begin{align*}
+	Q = \left[ {\begin{array}{ccc}
+			q_1 & \cdots  & q_n
+	\end{array}} \right] \\
+	Q^T = \left[ {\begin{array}{c}
+			q_1 \\ \vdots  \\ q_n
+	\end{array}} \right] \\
+	\forall q_i \left( S q_i = \lambda_i \right) \\
+	\forall q_i \left( \| q_i \|^2 = 1 \right)
+\end{align*}
+
+
+
 \subsection{Singular Value Decomposition (SVD)}
 
+Next, I will be discussing \textit{Singular Value Decomposition}. 
+It is similar to the Spectral decomposition  discussed in the last section, but is applicable to \textit{all} matrices, not just symmetrical ones.
 
-
+The result we want is a decomposition of \textit{A} into left/right orthonormal ``singular vectors'' \textit{U} and \textit{V}, connected by a diagonal matrix of ``singular values'' $\Sigma$:
 \begin{equation}
 	A = U \Sigma V^T
 	\label{eq:SVD}
 \end{equation}
+
+
+\begin{align*}
+	A^T &= (U \Sigma V^T)^T \\
+	&= (\Sigma V^T)^T U^T \\
+	&= V \Sigma^T U^T 
+\end{align*}
+
+We cannot perform a spectral decomposition directly on the non-symmetric matrix \textit{A}, so instead we look at the spectral decompositions of $A^T A$ and $A A^T$ .
+
+\begin{align*}
+	(A^T A ) = V \Lambda_1 V^T
+\end{align*}
+
+\begin{align*}
+	(A A^T) = U \Lambda_2 U^T
+\end{align*}
+
+If A is full-rank and invertible, $A^T A$ and $A A^T$ are similar and thus their nonzero eigenvalues are equal.
+
+
+
+
+Note that there are faster ways of computing SVD than working with these products directly, this is just useful for understanding and proving SVD.
+
+(proof not finished yet)
+
+
+%Assuming the wanted decomposition holds ...
+
+\begin{align*}
+	A^T A &= U \Sigma V^T V \Sigma^T U^T  \\
+	\tag*{\textit{V} is orthonormal, so $V^T V = I$}
+	&= U \Sigma \Sigma^T U^T  \\
+	\tag*{$\Sigma$ diagonal and therefore symmetric, so $\Sigma^T = \Sigma$}
+	&= U \Sigma^2 U^T 
+\end{align*}
+
+.. similarly
+
+\begin{align*}
+	A A^T &=  V \Sigma^T U^T  U \Sigma V^T
+	= V \Sigma \Sigma^T V^T  
+	= V \Sigma^2 V^T 
+\end{align*}
+
+
+
+
+
+
+\[
+A_{m\times n} = U_{m\times m} \Sigma_{m\times n} V_{n\times n} 
+\]
+
+We can ignore what is in the null space of $A^T A$ to reduce dimensions without losing any data.
+
+\[
+A_{m\times n} = U_{m\times r} \Sigma_{r\times r} V_{r\times n} 
+\]
+
+\[
+\Sigma_{n\times n} =
+\left[ {\begin{array}{cccc}
+		\sigma_{1} & 0 & \cdots & 0       \\
+		0 & \sigma_{2} & \cdots & 0 \\
+		\vdots & \vdots   & \ddots & \vdots	\\
+		0 & 0 & \cdots  & \sigma_{n}\\
+\end{array} } \right]
+\]
+
+
+
 
 \subsection{Principle Component Analysis}
 
@@ -133,7 +289,7 @@ This claim is neatly defined in the \textit{Eckart-Young Theorem}:
 
 
 
-\cite{sommer}
+%\cite{sommer}
 
 \section{Demonstrative Work}
 
