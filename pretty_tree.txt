@@ -1,0 +1,96 @@
+
+   /-Baronia_brevicornis
+  |
+  |      /-Iphiclides_podalirius
+  |     |
+  |   /-|      /-Graphium_evemon
+  |  |  |   /-|
+  |  |  |  |  |   /-Graphium_sarpedon
+  |  |   \-|   \-|
+--|  |     |      \-Graphium_agamemnon
+  |  |     |
+  |  |      \-Protographium_marcellus
+  |  |
+  |  |         /-Hypermnestra_helios
+  |  |      /-|
+  |  |     |  |   /-Parnassius_orleans
+  |  |     |   \-|
+  |  |     |      \-Parnassius_honrathi
+   \-|   /-|
+     |  |  |      /-Archon_apollinus
+     |  |  |   /-|
+     |  |  |  |   \-Luehdorfia_puziloi
+     |  |   \-|
+     |  |     |   /-Sericinus_montela
+     |  |      \-|
+     |  |        |   /-Zerynthia_polyxena
+     |  |         \-|
+     |  |            \-Allancastria_cerisyi
+     |  |
+     |  |   /-Teinopalpus_imperialis
+     |  |  |
+      \-|  |         /-Battus_polydamas
+        |  |      /-|
+        |  |     |   \-Battus_belus
+        |  |     |
+        |  |     |   /-Pharmacophagus_antenor
+        |  |     |  |
+        |  |   /-|  |         /-Trogonoptera_brookiana
+        |  |  |  |  |      /-|
+        |  |  |  |  |     |  |   /-Troides_rhadamantus
+        |  |  |  |  |     |   \-|
+        |  |  |  |  |     |      \-Ornithoptera_richmondia
+        |  |  |   \-|   /-|
+        |  |  |     |  |  |      /-Euryades_corethrus
+         \-|  |     |  |  |   /-|
+           |  |     |  |  |  |  |   /-Parides_agavus
+           |  |     |  |  |  |   \-|
+           |  |     |  |   \-|     |   /-Parides_photinus
+           |  |     |  |     |      \-|
+           |  |      \-|     |         \-Parides_eurimedes
+           |  |        |     |
+           |  |        |      \-Cressida_cressida
+           |  |        |
+           |  |        |      /-Byasa_alcinous
+           |  |        |   /-|
+           |  |        |  |  |   /-Atrophaneura_semperi
+           |  |        |  |   \-|
+           |  |         \-|      \-Atrophaneura_dixoni
+           |  |           |
+           |  |           |      /-Pachliopta_aristolochiae
+            \-|           |   /-|
+              |            \-|   \-Pachliopta_kotzebuea
+              |              |
+              |               \-Losaria_coon
+              |
+              |            /-Papilio_aristodemus
+              |         /-|
+              |        |  |   /-Papilio_thoas
+              |        |   \-|
+              |      /-|      \-Papilio_cresphontes
+              |     |  |
+              |     |  |   /-Papilio_slateri
+              |     |   \-|
+              |     |     |   /-Papilio_glaucus
+              |   /-|      \-|
+              |  |  |         \-Papilio_troilus
+              |  |  |
+              |  |  |   /-Papilio_gigon
+              |  |  |  |
+              |  |  |  |      /-Papilio_xuthus
+              |  |   \-|   /-|
+              |  |     |  |  |   /-Papilio_polyxenes
+              |  |     |  |   \-|
+              |  |      \-|      \-Papilio_zelicaon
+               \-|        |
+                 |        |   /-Papilio_deiphobus
+                 |         \-|
+                 |           |   /-Papilio_protenor
+                 |            \-|
+                 |              |   /-Papilio_polytes
+                 |               \-|
+                 |                 |   /-Papilio_phestus
+                 |                  \-|
+                 |                     \-Papilio_ambrax
+                 |
+                  \-Meandrusa_sciron
