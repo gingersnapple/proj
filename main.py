@@ -74,17 +74,16 @@ def ppca_init(tree,x):
     mle_r, mle_R = mle_estimate(x,cov)
     evals, evecs = np.linalg.eigh(mle_R)
     x_centered = x - mle_r[None,:]
-
     return evals, evecs, x_centered, mle_r, mle_R
 
 def ppca_recon(mle_r,x_cent,evecs,k=2):
     # X_mean = np.mean(X,axis=0)
     V_k = evecs[:, -k:]
-    # print(X_cent.shape,V_k.shape)
+    #print(x_cent.shape,V_k.shape)
     X_reduced = x_cent @ V_k
-    # print(X_reduced.shape)
+    #print(X_reduced.shape)
     X_reconstructed = X_reduced @ V_k.T + mle_r[None, :]
-    # print(X_reconstructed.shape)
+    #print(X_reconstructed.shape)
     return X_reconstructed
 
 
@@ -125,12 +124,13 @@ def main():
     Cov = cov_matrix(ptree)
     logtime("covariance matrix")
 
-    Evals, Evecs, X_cent, Mle_r, Mle_R = ppca_init(ptree,Cov)
+    Evals, Evecs, X_cent, Mle_r, Mle_R = ppca_init(ptree,X)
     logtime("ppca init")
 
     print(f'\n{"":<{p3}}{"ppca reconstruction"}')
     for K in range(1,N+1):
-        prec = ppca_recon(Mle_r,X_cent,Evecs,K)
+        krec = ppca_recon(Mle_r,X_cent,Evecs,K)
+        np.savetxt(f'out/{K}-recon.txt', krec, delimiter='\t')
         logtime(f"k={K}")
 
 main()
