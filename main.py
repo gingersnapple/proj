@@ -40,79 +40,43 @@ def design_matrix(n,m):
     return des
 
 
+
+
 #np.set_printoptions(threshold=sys.maxsize)
 def cov_matrix(preorder, leaves):
     m = len(preorder)  # number of nodes in tree (including internal)
-    dists = np.zeros(m)
-
     n = len(leaves)
-    # lca_matrix = np.zeros((N, N), dtype=int)
-    cov = np.zeros((n, n))
 
-    lcds = np.zeros((m,m),dtype=int)
-    leaf_indices = np.empty(n, dtype=int)
+    dists = np.zeros(m)
+    lcas = np.zeros((m,m),dtype=int)
+    leaf_inds = np.empty(n, dtype=int)
     k = 0
+
+    sizes = np.zeros(m, dtype=int)
+    def get_size(ind):
+        sz = sizes[i]
+        if sz == 0:
+            sz = len(preorder[ind].get_descendants())+1
+            sizes[i] = sz
+        return sz
+        
     for i in range(m):
-        node = preorder[i]
-        if node.is_leaf():
-            leaf_indices[k] = i
-            k += 1
-
-        branch_size = len(node.get_descendants())+1
-
-        dists[i:i+branch_size] += node.dist
-
-        if branch_size >= 2:
+        s = get_size(i)
+        dists[i:i+s] += preorder[i].dist
+        if s >= 2:
             l = i+1
-            r = l+len(preorder[l].get_descendants())+1
-            end = r+len(preorder[r].get_descendants())+1
-            lcds[l:r,r:end+1] = i
-            lcds[r:end+1,l:r] = i
+            r = l + get_size(l)
+            end = r + get_size(r)
+            # ulgy, use mask instead?
+            lcas[i:r,r:end] = lcas[r:end,i:r] = lcas[i, i:r] = lcas[i:r, i] = i
+        else:
+            leaf_inds[k] = i
+            k += 1
+        lcas[i,i] = i
 
-        lcds[i,i] = i
+    leaf_lcds = lcas[leaf_inds][:,leaf_inds]
+    cov = dists[leaf_lcds]
 
-
-    leaf_lcds = lcds[leaf_indices][:,leaf_indices]
-    print(leaf_lcds[2,2])
-            # left_node = preorder[l]
-            # right_node = preorder[r]
-            # end_node = preorder[end-1]
-            #print(left_node.get_common_ancestor(right_node) == node)
-            #print(left_node.get_common_ancestor(end_node) == node)
-            #print(preorder[i+left_size-1].is_leaf())
-            #child2 = preorder[i + 1]
-            #child2 = node.children[1]
-
-            #
-
-
-    logtime("cov 1")
-
-
-
-    # TODO: optimize this more? maybe implement own get_common_ancestor function
-
-    k = 0
-
-    lcds_old = np.zeros((n,n),dtype=int)
-
-    for i in range(n):
-        for j in range(i, n):
-            ancestor = leaves[i].get_common_ancestor(leaves[j])
-            lca_ij = preorder.index(ancestor)
-            # lca_matrix[i, j] = lca_matrix[j, i] = lca_ij
-            lcds_old[i,j] = lcds_old[j,i] = lca_ij
-            cov[i, j] = cov[j, i] = dists[lca_ij]
-
-            if leaf_lcds[i, j] != lca_ij:
-                print("A",i, j, leaf_lcds[i, j], lca_ij)
-            if leaf_lcds[j, i] != lca_ij:
-                print("B",i, j, leaf_lcds[i, j], lca_ij)
-
-    logtime("cov 2")
-    #print(lcds)
-    #print(lcds[0,0],lcds_old[0,0])
-    #print(leaf_lcds == lcds_old)
     return cov
 
 
@@ -121,27 +85,25 @@ def mle_estimate(x,cov):
     n,d = x.shape
     v1 = np.ones(n)
     cov_inv = np.linalg.inv(cov)
-    logtime("inv")
 
     tmp = v1.T @ cov_inv
     mle_r = ((tmp @ v1) ** -1) * (tmp @ x)
     assert mle_r.shape == (d,)
     x_centered = x - mle_r[None, :]
-    logtime("mle r")
 
 
     tmp = x - mle_r.T
     mle_R = (((n - 1) ** -1) * tmp.T) @ cov_inv @ tmp
     assert mle_R.shape == (d, d)
-    logtime("mle R")
 
     return mle_r, mle_R, x_centered
 
 def ppca_init(x,preorder,leaves):
     cov = cov_matrix(preorder,leaves)
-    #logtime("covariance matrix")
+    logtime("covariance matrix")
 
     mle_r, mle_R,x_centered = mle_estimate(x,cov)
+    logtime("mle calculations")
 
     evals, evecs = np.linalg.eigh(mle_R)
     logtime("eigen decomposition")
@@ -204,6 +166,8 @@ def main():
         np.savetxt(f'out/ppca-init-{i}.txt', outs[i], delimiter='\t')
 
     logtime("printout")
+
+    recons(Mle_r,X_cent,Evecs)
 
 
 main()
