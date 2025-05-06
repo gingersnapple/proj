@@ -88,6 +88,7 @@ def mle_estimate(x,cov):
 
     tmp1 = v1.T @ cov_inv
     mle_r = ((tmp1 @ v1) ** -1) * (tmp1 @ x)
+    print(v1.shape,cov_inv.shape,x.shape,tmp1.shape,mle_r.shape)
     x_centered = x - mle_r[None, :]
 
     tmp2 = x - mle_r.T

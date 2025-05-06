@@ -287,9 +287,33 @@ This claim is neatly defined in the \textit{Eckart-Young Theorem}:
 
 \subsection{Phylogenetic PCA}
 
+\subsubsection{Evolutionary covariance matrix}
+
+% C is the n × n variance-covariance matrix under Brownian motion for tip characters given the phylogenetic tree
+
+% C ∈ RN ×N is the evolutionary covariance matrix determined by the p-tree; Cij = L(r, MRCA(ni , nj )). 
+% I.e. Cij is the shared branch length between ni and nj
 
 
-%\cite{sommer}
+%\subsubsection{Phylogenetic mean}
+
+
+$$
+\hat{r} = \frac{1}{\mathrm{1}^T C^{-1} \mathrm{1}} \left( \mathrm{1}^T C^{-1} X \right)
+$$
+
+
+%\subsubsection{covariance parameter / evolutionary rate / diffusion rate of the character}
+$$
+\hat{R} = \frac{1}{n-1} \left( X - \hat{r}^T \right)^T C^{-1} \left( X - \hat{r}^T \right)
+$$
+
+% Phylogenetic Comparative Methods  Luke J. Harmon  page 69
+%  (O’Meara et al. 2006a).  
+
+% Tangent phylogenetic PCA  Sommer et. al.  page 4
+
+
 
 \section{Demonstrative Work}
 
