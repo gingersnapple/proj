@@ -1,9 +1,11 @@
 import numpy as np
-import sys
 from ete3 import Tree
 import pandas as pd
 import time
-
+# Rapport: husk rød tråd, antagelser, læserens forudsætninger (sig det explicit)
+# TODO: artificielle træer, se udvikling af køretider som f. af datasæt størrelse
+# TODO: generer data, træer i N størrelse
+# tal om evt. data påvirker eigendecomposition.. sammenlign med original data
 
 def load_data():
     data = np.loadtxt("/var/home/luka/proj/Papilonidae_dataset_v2/Papilionidae_aligned_new.txt", delimiter="\t").reshape((2240, 200))
@@ -43,10 +45,8 @@ def design_matrix(n,m):
 
 
 #np.set_printoptions(threshold=sys.maxsize)
-def cov_matrix(preorder, leaves):
-    m = len(preorder)  # number of nodes in tree (including internal)
-    n = len(leaves)
-
+def cov_matrix(preorder,n):
+    m = len(preorder)
     dists = np.zeros(m)
     lcas = np.zeros((m,m),dtype=int)
     leaf_inds = np.empty(n, dtype=int)
@@ -67,7 +67,7 @@ def cov_matrix(preorder, leaves):
             l = i+1
             r = l + get_size(l)
             end = r + get_size(r)
-            # ulgy, use mask instead?
+            # ugly, use mask instead?
             lcas[i:r,r:end] = lcas[r:end,i:r] = lcas[i, i:r] = lcas[i:r, i] = i
         else:
             leaf_inds[k] = i
@@ -86,20 +86,18 @@ def mle_estimate(x,cov):
     v1 = np.ones(n)
     cov_inv = np.linalg.inv(cov)
 
-    tmp = v1.T @ cov_inv
-    mle_r = ((tmp @ v1) ** -1) * (tmp @ x)
-    assert mle_r.shape == (d,)
+    tmp1 = v1.T @ cov_inv
+    mle_r = ((tmp1 @ v1) ** -1) * (tmp1 @ x)
     x_centered = x - mle_r[None, :]
 
-
-    tmp = x - mle_r.T
-    mle_R = (((n - 1) ** -1) * tmp.T) @ cov_inv @ tmp
-    assert mle_R.shape == (d, d)
+    tmp2 = x - mle_r.T
+    mle_R = (((n - 1) ** -1) * tmp2.T) @ cov_inv @ tmp2
 
     return mle_r, mle_R, x_centered
 
 def ppca_init(x,preorder,leaves):
-    cov = cov_matrix(preorder,leaves)
+    n,d = x.shape
+    cov = cov_matrix(preorder,n)
     logtime("covariance matrix")
 
     mle_r, mle_R,x_centered = mle_estimate(x,cov)
@@ -127,7 +125,7 @@ p1 = 9      # constants for padding print statements
 p2 = 4
 p3 = p1+p2
 
-ts = 64
+ts = 128
 
 
 def time_init():
@@ -151,8 +149,9 @@ def recons(mle_r,x_cent,evecs):
     print(f'\n{"":<{p3}}{"ppca reconstruction"}')
     for K in range(1,N+1):
         krec = ppca_recon(mle_r,x_cent,evecs,K)
-        np.savetxt(f'out/{K}-recon.txt', krec, delimiter='\t')
         logtime(f"k={K}")
+        np.savetxt(f'out/{K}-recon.txt', krec, delimiter='\t')
+        logtime("printout")
 
 def main():
     time_init()
