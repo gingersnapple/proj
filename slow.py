@@ -42,11 +42,12 @@ def load_data():
 
 def design_matrix(n, m):
     des = np.zeros((n * m, m))
-    i_indices = np.arange(n * m)
-    j_indices = np.arange(m)
-    # Use broadcasting to create a mask
-    mask = (j_indices[:, None] * n <= i_indices) & (i_indices < (j_indices[:, None] + 1) * n)
-    des[mask.T] = 1.0
+
+    for i in range(n * m):
+        for j in range(m):
+            if (j - 1) * n < i >= j * n:
+                des[i, j] = 1.
+
     return des
 
 

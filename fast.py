@@ -2,10 +2,21 @@ import numpy as np
 from ete3 import Tree
 import pandas as pd
 import time
+import ngesh
+import matplotlib.pyplot as plt
+#import jax.numpy as jnp
+
 # Rapport: husk rød tråd, antagelser, læserens forudsætninger (sig det explicit)
 # TODO: artificielle træer, se udvikling af køretider som f. af datasæt størrelse
 # TODO: generer data, træer i N størrelse
 # tal om evt. data påvirker eigendecomposition.. sammenlign med original data
+
+def generate_data(n,d=200,seed=None):
+    tree = ngesh.gen_tree(num_leaves=n,seed=seed)
+    x = np.random.normal(size=(n,d))
+    preorder = [n for n in tree.traverse('preorder')]
+    leaves = [n for n in preorder if n.is_leaf()]
+    return x, tree, preorder, leaves
 
 def load_data():
     data = np.loadtxt("/var/home/luka/proj/Papilonidae_dataset_v2/Papilionidae_aligned_new.txt", delimiter="\t").reshape((2240, 200))
@@ -40,9 +51,6 @@ def design_matrix(n,m):
     mask = (j_indices[:, None] * n <= i_indices) & (i_indices < (j_indices[:, None] + 1) * n)
     des[mask.T] = 1.0
     return des
-
-
-
 
 #np.set_printoptions(threshold=sys.maxsize)
 def cov_matrix(preorder,n):
@@ -79,7 +87,6 @@ def cov_matrix(preorder,n):
 
     return cov
 
-
 # computes mle of phylogenetic mean (root shape) 'r', and covariance parameter 'R'
 def mle_estimate(x,cov):
     n,d = x.shape
@@ -88,7 +95,6 @@ def mle_estimate(x,cov):
 
     tmp1 = v1.T @ cov_inv
     mle_r = ((tmp1 @ v1) ** -1) * (tmp1 @ x)
-    print(v1.shape,cov_inv.shape,x.shape,tmp1.shape,mle_r.shape)
     x_centered = x - mle_r[None, :]
 
     tmp2 = x - mle_r.T
@@ -121,38 +127,82 @@ def ppca_recon(mle_r,x_cent,evecs,k=2):
 
 
 # t0: variable containing previous time.time()
-global t0,times,ti
+global t0,times,ti,tj,indent
 p1 = 9      # constants for padding print statements
 p2 = 4
 p3 = p1+p2
+#ts = 128
 
-ts = 128
-
-
-def time_init():
-    global t0,ti,times
+def time_init(tn,tm):
+    global t0,ti,tj,times,indent
     t0 = time.time()
-    ti = 0
-    times = np.empty((ts,), dtype=float)
+    ti = tj = 0
+    times = np.empty((tn,tm), dtype=float)
+    indent = 0
     print(f'{"(time [ms])":<{p3}}{"(comment)"}\n')
 
-def logtime(comment=""):
-    global t0,ti,times
+def logtime(comment="",newline=False):
+    global t0,ti,tj,times
     t1 = time.time()
     res = (t1-t0)*1000
-    times[ti] = res
+    times[ti,tj] = res
     print(f'{res:>{p1}.6f}{"":<{p2}}{comment}')
     t0 = t1
-    ti += 1
 
-def recons(mle_r,x_cent,evecs):
-    N, D = x_cent.shape
-    print(f'\n{"":<{p3}}{"ppca reconstruction"}')
-    for K in range(1,N+1):
-        krec = ppca_recon(mle_r,x_cent,evecs,K)
-        logtime(f"k={K}")
-        np.savetxt(f'out/{K}-recon.txt', krec, delimiter='\t')
-        logtime("printout")
+    if newline:
+        ti += 1
+        tj = 0
+    else:
+        tj += 1
+
+
+def recons(mle_r,x_cent,evecs,k):
+    #N, D = x_cent.shape
+    #print(f'\n{"":<{p3}}{"ppca reconstruction"}')
+    #for K in range(k0,k1):
+    ppca_recon(mle_r,x_cent,evecs,k)
+        #logtime(f"k={K}")
+        #np.savetxt(f'out/{K}-recon.txt', krec, delimiter='\t')
+        #logtime("printout")
+    logtime("ppca reconstruction",newline=True)
+
+
+n_min = 8
+step = n_min
+n_max = 1024
+
+num_tests = (n_max - n_min) // step
+num_subtests = 5
+
+def gen():
+    time_init(num_tests,num_subtests)
+    for n in range(n_min,n_max,step):
+        X, ptree, preorder, leaves = generate_data(n)
+        #print('\n',ptree)
+        logtime(f"n={n}")
+        Evals, Evecs, X_cent, Mle_r, Mle_R = ppca_init(X, preorder, leaves)
+        recons(Mle_r,X_cent,Evecs,2)
+
+    cov_times = times[:,1]
+    mle_times = times[:,2]
+    eig_times = times[:,3]
+    rec_times = times[:,4]
+
+    ns = np.arange(n_min,n_max,step)
+    plt.plot(ns,cov_times)
+    plt.title('covariance matrix')
+    plt.show()
+    plt.plot(ns,mle_times)
+    plt.title('mle calculations')
+    plt.show()
+    plt.plot(ns,eig_times)
+    plt.title('eigen decomposition')
+    plt.show()
+    plt.plot(ns,rec_times)
+    plt.title('reconstruction')
+    plt.show()
+
+    np.savetxt('out/times.txt',times)
 
 def main():
     time_init()
@@ -169,5 +219,5 @@ def main():
 
     recons(Mle_r,X_cent,Evecs)
 
-
-main()
+gen()
+#main()
