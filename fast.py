@@ -54,6 +54,7 @@ def design_matrix(n,m):
 
 #np.set_printoptions(threshold=sys.maxsize)
 def cov_matrix(preorder,n):
+    #TODO: memoriziation on visited nodes
     m = len(preorder)
     dists = np.zeros(m)
     lcas = np.zeros((m,m),dtype=int)
@@ -85,7 +86,7 @@ def cov_matrix(preorder,n):
     leaf_lcds = lcas[leaf_inds][:,leaf_inds]
     cov = dists[leaf_lcds]
 
-    return cov
+    return cov,m
 
 # computes mle of phylogenetic mean (root shape) 'r', and covariance parameter 'R'
 def mle_estimate(x,cov):
@@ -218,6 +219,3 @@ def main():
     logtime("printout")
 
     recons(Mle_r,X_cent,Evecs)
-
-gen()
-#main()
