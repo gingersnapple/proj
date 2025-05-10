@@ -1,0 +1,114 @@
+M: 95	N: 48	Max depth: 13	Colless imbalance: 0.209990749306198
+
+birth_rate = 1.25
+death_rate: 0.10	mean_depth: 10.94	mean_imb: 0.14
+death_rate: 0.20	mean_depth: 11.41	mean_imb: 0.15
+death_rate: 0.30	mean_depth: 11.95	mean_imb: 0.17
+death_rate: 0.40	mean_depth: 12.41	mean_imb: 0.18
+death_rate: 0.50	mean_depth: 13.06	mean_imb: 0.20
+death_rate: 0.60	mean_depth: 13.63	mean_imb: 0.22
+death_rate: 0.70	mean_depth: 14.29	mean_imb: 0.24
+death_rate: 0.80	mean_depth: 14.72	mean_imb: 0.25
+death_rate: 0.90	mean_depth: 15.41	mean_imb: 0.27
+death_rate: 1.00	mean_depth: 15.96	mean_imb: 0.28
+death_rate: 1.10	mean_depth: 16.53	mean_imb: 0.30
+death_rate: 1.20	mean_depth: 16.87	mean_imb: 0.30
+death_rate: 1.30	mean_depth: 17.19	mean_imb: 0.31
+death_rate: 1.40	mean_depth: 17.39	mean_imb: 0.31
+death_rate: 1.50	mean_depth: 17.67	mean_imb: 0.32
+
+
+birth_rate = 1.0
+death_rate: 0.10	mean_depth: 11.03	mean_imb: 0.14
+death_rate: 0.20	mean_depth: 11.62	mean_imb: 0.16
+death_rate: 0.30	mean_depth: 12.29	mean_imb: 0.18
+
+death_rate: 0.31	mean_depth: 12.35	mean_imb: 0.18
+death_rate: 0.32	mean_depth: 12.41	mean_imb: 0.18
+death_rate: 0.33	mean_depth: 12.50	mean_imb: 0.19
+death_rate: 0.34	mean_depth: 12.52	mean_imb: 0.19
+death_rate: 0.35	mean_depth: 12.64	mean_imb: 0.19
+death_rate: 0.36	mean_depth: 12.75	mean_imb: 0.19
+death_rate: 0.37	mean_depth: 12.83	mean_imb: 0.20
+death_rate: 0.38	mean_depth: 12.90	mean_imb: 0.20
+death_rate: 0.39	mean_depth: 12.99	mean_imb: 0.20
+death_rate: 0.40	mean_depth: 13.06	mean_imb: 0.20
+death_rate: 0.41	mean_depth: 13.13	mean_imb: 0.21
+death_rate: 0.42	mean_depth: 13.16	mean_imb: 0.21
+death_rate: 0.43	mean_depth: 13.27	mean_imb: 0.21
+death_rate: 0.44	mean_depth: 13.30	mean_imb: 0.21
+death_rate: 0.45	mean_depth: 13.41	mean_imb: 0.21
+death_rate: 0.46	mean_depth: 13.45	mean_imb: 0.22
+death_rate: 0.47	mean_depth: 13.51	mean_imb: 0.22
+death_rate: 0.48	mean_depth: 13.63	mean_imb: 0.22
+death_rate: 0.49	mean_depth: 13.72	mean_imb: 0.22
+
+death_rate: 0.50	mean_depth: 13.86	mean_imb: 0.23
+death_rate: 0.60	mean_depth: 14.46	mean_imb: 0.24
+death_rate: 0.70	mean_depth: 15.26	mean_imb: 0.27
+death_rate: 0.80	mean_depth: 15.96	mean_imb: 0.28
+death_rate: 0.90	mean_depth: 16.56	mean_imb: 0.30
+death_rate: 1.00	mean_depth: 17.11	mean_imb: 0.31
+
+
+death_rate = 0.41
+birth_rate: 0.95	mean_depth: 13.27	mean_imb: 0.21
+birth_rate: 0.96	mean_depth: 13.26	mean_imb: 0.21
+birth_rate: 0.97	mean_depth: 13.19	mean_imb: 0.21
+birth_rate: 0.98	mean_depth: 13.14	mean_imb: 0.21
+birth_rate: 0.99	mean_depth: 13.15	mean_imb: 0.21
+birth_rate: 1.00	mean_depth: 13.13	mean_imb: 0.21
+birth_rate: 1.01	mean_depth: 13.11	mean_imb: 0.21
+birth_rate: 1.02	mean_depth: 13.08	mean_imb: 0.20
+birth_rate: 1.03	mean_depth: 13.08	mean_imb: 0.20
+birth_rate: 1.04	mean_depth: 13.04	mean_imb: 0.20
+birth_rate: 1.05	mean_depth: 13.01	mean_imb: 0.20
+birth_rate: 1.06	mean_depth: 12.98	mean_imb: 0.20
+birth_rate: 1.07	mean_depth: 12.93	mean_imb: 0.20
+birth_rate: 1.08	mean_depth: 12.90	mean_imb: 0.20
+birth_rate: 1.09	mean_depth: 12.86	mean_imb: 0.20
+birth_rate: 1.10	mean_depth: 12.85	mean_imb: 0.20
+birth_rate: 1.11	mean_depth: 12.82	mean_imb: 0.20
+birth_rate: 1.12	mean_depth: 12.78	mean_imb: 0.20
+birth_rate: 1.13	mean_depth: 12.77	mean_imb: 0.19
+birth_rate: 1.14	mean_depth: 12.75	mean_imb: 0.19
+birth_rate: 1.15	mean_depth: 12.71	mean_imb: 0.19
+
+
+
+
+
+
+
+birth_rate:	1.0
+0.400	12.900	0.197
+0.405	12.960	0.198
+    0.410	12.990	0.202
+    0.415	13.040	0.204
+    0.420	13.000	0.203
+    0.425	13.140	0.205
+    0.430	13.270	0.208
+    0.435	13.390	0.212
+0.440	13.360	0.213
+0.445	13.390	0.214
+0.450	13.290	0.212
+
+
+
+birth_rate:	1.1
+0.425	12.810	0.195
+0.430	12.850	0.196
+0.435	12.930	0.196
+0.440	12.900	0.197
+0.445	12.960	0.198
+    0.450	12.970	0.200
+    0.455	13.070	0.205
+    0.460	13.040	0.204
+    0.465	13.080	0.205
+    0.470	13.270	0.208
+    0.475	13.250	0.209
+    0.480	13.390	0.212
+0.485	13.370	0.213
+0.490	13.390	0.214
+0.495	13.290	0.212
+0.500	13.280	0.212

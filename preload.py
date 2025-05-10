@@ -3,17 +3,18 @@ from ete3 import Tree
 import pandas as pd
 import ngesh
 
-
-sample_size = 12
-ns = [round(n) for n in np.logspace(start=3, stop=10, num=50, base=2)]
+batch_size = 64
+sample_size = 128
+ns = [round(n) for n in np.logspace(start=3, stop=10, num=sample_size, base=2)]
 
 org_path = "./preload/original_data/"
 gen_path = "./preload/generated_data/"
 
 
-def generate_sample(n,d=200,seed=0):
+def generate_sample(n=48,d=200,seed=0):
     print("generating sample")
-    tree = ngesh.gen_tree(num_leaves=n,seed=seed)
+    # birth/death rates chosen to generate tree similar to source
+    tree = ngesh.gen_tree(num_leaves=n,birth=1.5,death=0.586,seed=seed)
     x = np.random.normal(size=(n,d))
     preorder = [n for n in tree.traverse('preorder')]
     leaves = [n for n in preorder if n.is_leaf()]
@@ -23,7 +24,7 @@ def generate_data():
     print("Generating data")
     for n in ns:
         print(f'n={n}')
-        for s in range(sample_size):
+        for s in range(batch_size):
             print(f' seed={s}')
             X, Preorder, Leaves, Ptree = generate_sample(n, seed=s)
             pth = f'./preload/generated_data/{n:0>4}_{s:0>2}_'
@@ -62,5 +63,5 @@ def load_original_data():
 
 def load_generated_data(size=0,seed=0):
     n = ns[size]
-    path = gen_path+f'.{n:0>4}_{seed:0>2}_'
+    path = gen_path+f'{n:0>4}_{seed:0>2}_'
     return load_data(path)
